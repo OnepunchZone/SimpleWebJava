@@ -3,6 +3,8 @@ package ru.otus.java.basic.http.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class HttpServer {
     private int port;
@@ -20,11 +22,25 @@ public class HttpServer {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                new ProcessingRequests(socket, dispatcher);
+                System.out.println("Socket accept");
+                Queue<Runnable> taskList = new LinkedList<>();
+                Task task = new Task(socket, dispatcher);
+                taskList.add(task);
+
+                Thread thread = new Thread(() -> {
+                    while (true) {
+                        Runnable newTask = taskList.poll();
+                        if (newTask != null) {
+                            newTask.run();
+                        }
+                    }
+                });
+                thread.start();
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }
