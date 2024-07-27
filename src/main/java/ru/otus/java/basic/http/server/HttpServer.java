@@ -22,7 +22,6 @@ public class HttpServer {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Socket accept");
                 Queue<Runnable> taskList = new LinkedList<>();
                 Task task = new Task(socket, dispatcher);
                 taskList.add(task);

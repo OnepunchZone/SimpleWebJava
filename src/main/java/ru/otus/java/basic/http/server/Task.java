@@ -22,7 +22,7 @@ public class Task implements Runnable{
             }
             String rawRequest = new String(buffer, 0, n);
             HttpRequest request = new HttpRequest(rawRequest);
-            System.out.println(request);
+            request.printInfo(true);
             dispatcher.execute(request, socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
