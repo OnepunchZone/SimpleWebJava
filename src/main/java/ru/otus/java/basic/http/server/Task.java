@@ -28,13 +28,10 @@ public class Task implements Runnable{
             e.printStackTrace();
         } finally {
             try {
-                if (socket != null) {
-                    socket.close();
-                }
+                socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 }
