@@ -3,7 +3,7 @@ package ru.otus.java.basic.http.server;
 import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.otus.java.basic.http.server.app.ProductsRepo;
+import ru.otus.java.basic.http.server.app.ProductsRepository;
 import ru.otus.java.basic.http.server.processors.*;
 
 import java.io.IOException;
@@ -18,16 +18,16 @@ public class Dispatcher {
     private RequestProcessor internalServerErrorRequest;
     private static final Logger logger = LogManager.getLogger(Dispatcher.class.getName());
 
-    private ProductsRepo productsRepo;
+    private ProductsRepository productsRepository;
 
     public Dispatcher() {
-        this.productsRepo = new ProductsRepo();
+        this.productsRepository = new ProductsRepository();
 
         this.processors = new HashMap<>();
         this.processors.put("GET /", new MainPageRequestProcessor());
         this.processors.put("GET /another", new AnotherRequestProcessor());
-        this.processors.put("GET /products", new GetAllProductsProcessor(productsRepo));
-        this.processors.put("POST /products", new CreateNewProductProcessor(productsRepo));
+        this.processors.put("GET /products", new GetAllProductsProcessor(productsRepository));
+        this.processors.put("POST /products", new CreateNewProductProcessor(productsRepository));
 
         this.defaultNotFoundRequest = new NotFoundRequestProcessor();
         this.internalServerErrorRequest = new InternalServerErrorProcessor();

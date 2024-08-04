@@ -3,7 +3,7 @@ package ru.otus.java.basic.http.server.processors;
 import com.google.gson.Gson;
 import ru.otus.java.basic.http.server.HttpRequest;
 import ru.otus.java.basic.http.server.app.Products;
-import ru.otus.java.basic.http.server.app.ProductsRepo;
+import ru.otus.java.basic.http.server.app.ProductsRepository;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,15 +11,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class GetAllProductsProcessor implements RequestProcessor{
-    private ProductsRepo productsRepo;
+    private ProductsRepository productsRepository;
 
-    public GetAllProductsProcessor(ProductsRepo productsRepo) {
-        this.productsRepo = productsRepo;
+    public GetAllProductsProcessor(ProductsRepository productsRepository) {
+        this.productsRepository = productsRepository;
     }
 
     @Override
     public void execute(HttpRequest request, OutputStream out) throws IOException {
-        List<Products> productsLst = productsRepo.getProducts();
+        List<Products> productsLst = productsRepository.getProducts();
         Gson gson = new Gson();
         String productsJson = gson.toJson(productsLst);
         String response = "" +

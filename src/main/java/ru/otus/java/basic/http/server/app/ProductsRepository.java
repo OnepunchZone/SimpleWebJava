@@ -3,14 +3,14 @@ package ru.otus.java.basic.http.server.app;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class ProductsRepo {
+public class ProductsRepository {
     private List<Products> products;
 
     public List<Products> getProducts() {
         return Collections.unmodifiableList(products);
     }
 
-    public ProductsRepo() {
+    public ProductsRepository() {
         this.products = new ArrayList<>(Arrays.asList(
                 new Products(1L, "Milk", BigDecimal.valueOf(80)),
                 new Products(2L, "Bread", BigDecimal.valueOf(32)),
