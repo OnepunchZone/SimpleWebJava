@@ -1,5 +1,8 @@
 package ru.otus.java.basic.http.server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,6 +13,7 @@ public class HttpServer {
     private final ExecutorService executorService;
     private int port;
     private Dispatcher dispatcher;
+    private static final Logger logger = LogManager.getLogger(HttpServer.class);
 
 
     public HttpServer(int port) {
@@ -21,7 +25,7 @@ public class HttpServer {
     public void start() {
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server run on port: " + port);
+            logger.info("Server run on port: " + port);
 
             while (true) {
                 Socket socket = serverSocket.accept();
@@ -29,7 +33,7 @@ public class HttpServer {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Wrong server action, invalid operation .", e);
         } finally {
             executorService.shutdown();
         }
